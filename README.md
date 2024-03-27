@@ -4,7 +4,7 @@ This program all boxes from a jpeg2000 file to stdout.
 This program was written as a learning exercise for
 understanding the format of jpeg2000 files.
 
-## Code Layout
+## Developer Documentation
 
 The most important driving function `boxes.rs:print_box`.
 The program's main will call this function in a loop until the program
