@@ -19,7 +19,7 @@ pub struct DataReferenceBox {
 impl Display for DataReferenceBox {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Data Reference Box ({} refs)", self.count)?;
-        let mut counter = 0;
+        let mut counter = 1;
         for reference in &self.refs {
             writeln!(f, "Reference {}, {:?}", counter, reference)?;
             counter += 1;

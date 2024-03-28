@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use std::fs::File;
-use std::io::{Error, Read, Result};
+use std::io::{Error, Read, Result, Seek};
 use std::io;
 
 #[derive(Debug)]
@@ -30,6 +30,14 @@ impl GenericBox {
         let btype = String::from_utf8(buf.into());
         if btype.is_err() {
             return Err(io::Error::new(io::ErrorKind::InvalidData, format!("{0}", btype.unwrap_err())));
+        }
+
+        if length == 0 && btype.clone().unwrap() == "jp2c" {
+            let position = fp.stream_position()?;
+            let codestream_length = fp.seek(io::SeekFrom::End(0))? - position;
+            println!("Found codestream at file offset {}", position);
+            println!("Assumed codestream runs to end of file. Length: {}", codestream_length);
+            std::process::exit(0);
         }
 
         let data_size = length - 8;
